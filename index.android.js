@@ -1,53 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
 
-export default class AwesomeProject extends Component {
+import { AppRegistry, Text } from 'react-native';
+
+import ModuleList from './src/views/module-list';
+import { modules } from './src/model';
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modules,
+      currentView: ModuleList,
+    };
+    this.addHook = this.addHook.bind(this);
+  }
+
+  addHook() {
+    this.setState(() => ({
+      currentView: null,
+    }));
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
+    if (this.state.currentView === ModuleList) {
+      return (
+        <ModuleList modules={modules} addHook={this.addHook} />
+      );
+    }
+    return (<Text>summat else</Text>);
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('AwesomeProject', () => App);
