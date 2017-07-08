@@ -1,4 +1,5 @@
 import React from 'react';
+import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,13 +16,13 @@ import {
   Text,
 } from 'native-base';
 
-const MLHeader = props => (
+const MLHeader = () => (
   <Header>
     <Body>
       <Title>Module List</Title>
     </Body>
     <Right>
-      <Button transparent onPress={() => (props.addHook())}>
+      <Button transparent onPress={Actions.moduleEdit}>
         <Icon name="plus" />
       </Button>
     </Right>
@@ -59,7 +60,7 @@ function MLList(props) {
 
 const ModuleList = props => (
   <Container>
-    <MLHeader addHook={props.addHook} />
+    <MLHeader />
     <Content>
       <MLList modules={props.modules} />
     </Content>
@@ -74,17 +75,12 @@ const modulesPropType = PropTypes.arrayOf(
   }),
 );
 
-const addHookPropType = PropTypes.func;
 
 ModuleList.propTypes = {
   modules: modulesPropType.isRequired,
-  addHook: addHookPropType.isRequired,
 };
 MLList.propTypes = {
   modules: modulesPropType.isRequired,
-};
-MLHeader.propTypes = {
-  addHook: addHookPropType.isRequired,
 };
 
 export default ModuleList;
