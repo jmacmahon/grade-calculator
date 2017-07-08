@@ -33,4 +33,4 @@ class App extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => App);
+AppRegistry.registerComponent('GradeCalculator', () => App);
