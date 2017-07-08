@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { AppRegistry } from 'react-native';
+import { StyleProvider } from 'native-base';
 
-import { AppRegistry, Text } from 'react-native';
+import getTheme from './native-base-theme/components';
 
 import ModuleList from './src/views/module-list';
+import ModuleAdd from './src/views/module-add';
 import { modules } from './src/model';
 
 class App extends Component {
@@ -22,12 +25,11 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.currentView === ModuleList) {
-      return (
-        <ModuleList modules={modules} addHook={this.addHook} />
-      );
-    }
-    return (<Text>summat else</Text>);
+    return (
+      <StyleProvider style={getTheme()}>
+        <ModuleAdd />
+      </StyleProvider>
+    );
   }
 }
 

@@ -22,13 +22,13 @@ const MLHeader = props => (
     </Body>
     <Right>
       <Button transparent onPress={() => (props.addHook())}>
-        <Icon android="md-add-circle" ios="ios-add-circle" />
+        <Icon name="plus" />
       </Button>
     </Right>
   </Header>
 );
 
-const MLList = (props) => {
+function MLList(props) {
   if (props.modules.length === 0) {
     return (<List>
       <ListItem>
@@ -48,14 +48,14 @@ const MLList = (props) => {
           </Body>
           <Right>
             <Button transparent>
-              <Icon android="md-create" ios="ios-create" />
+              <Icon name="edit" />
             </Button>
           </Right>
         </ListItem>
       )
     }
   />);
-};
+}
 
 const ModuleList = props => (
   <Container>
