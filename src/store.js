@@ -1,15 +1,15 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
 const initialModules = [
   {
     code: 'COM3002',
-    title: 'Human-Centred Systems Design',
+    name: 'Human-Centred Systems Design',
     credits: 20,
     mark: 65,
   },
 ];
 
-function modulesList(state = initialModules, action) {
+function modules(state = initialModules, action) {
   switch (action.type) {
     case 'ADD_MODULE':
       return state.concat([action.module]);
@@ -19,6 +19,4 @@ function modulesList(state = initialModules, action) {
   }
 }
 
-export const modulesListStore = createStore(modulesList);
-
-export const test = '';
+export default createStore(combineReducers({ modules }));
