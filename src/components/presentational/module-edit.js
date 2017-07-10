@@ -12,18 +12,31 @@ export default class ModuleEdit extends Component {
     this.state = {
       code: '',
       name: '',
-      credits: null,
-      mark: null,
+      credits: '',
+      mark: '',
     };
     this.saveAndReturn = this.saveAndReturn.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.id !== '') {
+      this.setState(this.props.modules[this.props.id]);
+      this.setState(state => ({
+        credits: state.credits.toString(),
+        mark: state.mark.toString(),
+      }));
+    }
+  }
+
   saveAndReturn() {
     this.props.saveModule({
-      code: this.state.code,
-      name: this.state.name,
-      credits: this.state.credits,
-      mark: this.state.mark,
+      id: this.props.id,
+      module: {
+        code: this.state.code,
+        name: this.state.name,
+        credits: this.state.credits - 0,
+        mark: this.state.mark - 0,
+      },
     });
     return Actions.pop();
   }
@@ -49,17 +62,22 @@ export default class ModuleEdit extends Component {
               onChangeText={(code) => {
                 this.setState({ code });
               }}
+              value={this.state.code}
             />
           </Item>
           <Item floatingLabel>
             <Label>Name</Label>
-            <Input onChangeText={(name) => { this.setState({ name }); }} />
+            <Input
+              onChangeText={(name) => { this.setState({ name }); }}
+              value={this.state.name}
+            />
           </Item>
           <Item floatingLabel>
             <Label>Credits</Label>
             <Input
               keyboardType="numeric"
               onChangeText={(credits) => { this.setState({ credits }); }}
+              value={this.state.credits}
             />
           </Item>
           <Item floatingLabel>
@@ -67,6 +85,7 @@ export default class ModuleEdit extends Component {
             <Input
               keyboardType="numeric"
               onChangeText={(mark) => { this.setState({ mark }); }}
+              value={this.state.mark}
             />
           </Item>
         </Form>
@@ -77,4 +96,18 @@ export default class ModuleEdit extends Component {
 
 ModuleEdit.propTypes = {
   saveModule: PropTypes.func.isRequired,
+  modules: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      code: PropTypes.string,
+      name: PropTypes.string,
+      credits: PropTypes.number,
+      mark: PropTypes.number,
+    }),
+  ).isRequired,
+  id: PropTypes.string,
+};
+
+ModuleEdit.defaultProps = {
+  id: '',
 };
